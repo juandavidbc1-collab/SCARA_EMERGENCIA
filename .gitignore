@@ -1,0 +1,10 @@
+.pio/
+.vscode/
+build/
+sdkconfig
+sdkconfig.*
+!sdkconfig.defaults
+__pycache__/
+*.csv
+tools/sim/build/
+components/micro_ros_espidf_component/

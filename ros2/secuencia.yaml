@@ -1,0 +1,28 @@
+# PROCESO ASIGNADO: atornillar los 4 huecos de las 4 placas.
+#
+# En cada hueco: mover el brazo -> abrir el servo (cae el tornillo) -> cerrarlo -> atornillar con M3 -> subir M3.
+# Sin encoders el error se acumula: al inicio y cada "ref_cada" huecos el brazo recorre sus ejes de tope a tope (unos 16 s).
+# Antes de iniciar: hacer Home y activar M3 en la pestaña Motores.
+#
+# Las coordenadas están en el plano de GeoGebra (cm). "base_cm" dice dónde está el eje de J1 en ese plano.
+# Si el brazo no alcanza un hueco, el archivo se rechaza al cargarlo y dice cuál.
+
+repeticiones: 1           # 0 = repite hasta que lo detengas
+
+proceso:
+  base_cm: [15, 0]        # Las 4 placas están a 15 cm de este punto
+  origen_cm: [14.5, -20]  # Está a 20 cm de la base y el brazo alcanza 19: se usa el punto alcanzable en esa dirección
+  codo: -1                # Con codo +1 las placas C y D se salen del límite de J1
+  placas_cm:              # Centro de cada placa; lados paralelos a los ejes
+    A: [29.1421, -5]
+    B: [26.1803, -10]
+    C: [20.8788, -13.8]
+    D: [15, -15]
+  lado_mm: 38
+  hueco_borde_mm: 3.5     # Medido en la imagen de la placa (+-0.1 mm): revisar contra el archivo de KiCad
+  asentar_s: 0.3          # Espera al llegar, antes de soltar el tornillo
+  ref_cada: 4             # Cada cuántos huecos se corrige. Más seguido es más preciso y más lento
+  servo: {abrir_s: 0.4, caida_s: 0.6}   # Servo abierto y espera a que el tornillo termine de caer
+  # M3 x 0.5: 12 vueltas = 6 mm. Ajustar al tornillo real. Sube al -35 % (el PWM de apretar) durante 18.5 s, las mismas 12 vueltas.
+  tornillo: {vueltas: 12, torque_nm: 0.4, subir_pct: 35, subir_s: 18.5}
+  ensayo: {potencia: 40, bajar_s: 3.5}      # Opción "Ensayo" del panel: M3 baja este tiempo y sube otro igual, sin servo ni tornillo

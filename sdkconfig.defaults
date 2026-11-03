@@ -1,0 +1,17 @@
+CONFIG_IDF_TARGET="esp32"
+CONFIG_ESP_BROWNOUT_DET=y
+CONFIG_FREERTOS_HZ=1000
+# menos ruido en el puerto serie (el protocolo usa el mismo puerto)
+# watchdog de tareas: si el lazo de control se cuelga, se reinicia (y STBY cae a 0 por R10)
+CONFIG_ESP_TASK_WDT_EN=y
+CONFIG_ESP_TASK_WDT_INIT=y
+CONFIG_ESP_TASK_WDT_PANIC=y
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=2
+# --- micro-ROS por serial: UART0 es del transporte, sin consola ni logs ---
+CONFIG_SCARA_COMMS_UROS=y
+CONFIG_ESP_CONSOLE_NONE=y
+CONFIG_LOG_DEFAULT_LEVEL_NONE=y
+CONFIG_BOOTLOADER_LOG_LEVEL_NONE=y
+CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE=y
+CONFIG_MICRO_ROS_ESP_UART_TRANSPORT=y
+CONFIG_SCARA_UROS_BAUD=460800

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!-- SCARA de 2 eslabones. Unidades en metros. l1 = 0.120, l2 = 0.070 (igual que KIN en src/config.c) -->
+<robot name="scara">
+  <material name="gris"><color rgba="0.55 0.58 0.62 1"/></material>
+  <material name="azul"><color rgba="0.15 0.45 0.85 1"/></material>
+  <material name="naranja"><color rgba="0.95 0.5 0.1 1"/></material>
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0.02"/>
+      <geometry><cylinder radius="0.035" length="0.04"/></geometry>
+      <material name="gris"/>
+    </visual>
+  </link>
+
+  <link name="link1">
+    <visual>
+      <origin xyz="0.06 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.12 0.025 0.015"/></geometry>
+      <material name="azul"/>
+    </visual>
+  </link>
+
+  <link name="link2">
+    <visual>
+      <origin xyz="0.035 0 0"/>
+      <geometry><box size="0.07 0.02 0.012"/></geometry>
+      <material name="naranja"/>
+    </visual>
+  </link>
+
+  <link name="ee">
+    <visual>
+      <geometry><sphere radius="0.008"/></geometry>
+      <material name="gris"/>
+    </visual>
+  </link>
+
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/><child link="link1"/>
+    <origin xyz="0 0 0.05"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.1416" upper="3.1416" effort="1" velocity="3"/>
+  </joint>
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/><child link="link2"/>
+    <origin xyz="0.12 0 0.015"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.1416" upper="3.1416" effort="1" velocity="3"/>
+  </joint>
+  <joint name="ee_joint" type="fixed">
+    <parent link="link2"/><child link="ee"/>
+    <origin xyz="0.07 0 0"/>
+  </joint>
+</robot>

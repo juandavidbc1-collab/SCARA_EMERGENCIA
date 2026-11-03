@@ -1,0 +1,28 @@
+menu "SCARA firmware"
+
+    config SCARA_COMMS_UROS
+        bool "Comunicacion por micro-ROS (ROS 2) en lugar del protocolo de texto"
+        default n
+        help
+            n = protocolo de texto por serial (comms.c, monitor de PlatformIO o tools/teleop.py).
+            y = micro-ROS (uros_comms.c). Requiere el componente micro_ros_espidf_component en
+                components/ y usar tools/uros_select.py para dejar la configuracion consistente.
+
+    config SCARA_UROS_STACK
+        int "Pila de la tarea micro-ROS (bytes)"
+        default 16000
+        depends on SCARA_COMMS_UROS
+
+    config SCARA_UROS_PRIO
+        int "Prioridad de la tarea micro-ROS"
+        default 5
+        depends on SCARA_COMMS_UROS
+
+    config SCARA_UROS_BAUD
+        int "Velocidad del transporte serial de micro-ROS (baudios)"
+        default 460800
+        depends on SCARA_COMMS_UROS
+        help
+            Debe coincidir con "-b" del agente micro-ROS. Con 115200 el enlace se satura: si baja a ese valor el panel se nota lento.
+
+endmenu
